@@ -1,27 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const connectToDatabase = require('./db');
 const multer = require('multer');
 const upload = multer();
-const connectToDatabase = require('./db');
 
-// POST method for file upload
-router.post('/', upload.single('file'), async (req, res) => {
-    res.send("File uploaded");
+router.get('/', async (req, res) => {
+    const db = await connectToDatabase(); // Call method here
+    const collection = db.collection("items");
+    const items = await collection.find({}).toArray();
+    res.json(items);
 });
 
-// GET all items
-router.get('/items', async (req, res) => {
-    res.json({ message: "List of items" });
-});
-
-// GET item by ID
-router.get('/items/:id', async (req, res) => {
-    res.json({ message: "Item details" });
-});
-
-// DELETE an item
-router.delete('/:id', async (req, res) => {
-    res.send("Item deleted");
-});
+router.post('/', upload.single('file'), (req, res) => { res.send("Uploaded"); });
+router.get('/:id', (req, res) => { res.send("Item Detail"); });
+router.delete('/:id', (req, res) => { res.send("Deleted"); });
 
 module.exports = router;
