@@ -1,19 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
-// API for registration
-router.post('/register', (req, res) => {
-    res.json({ message: "User registered" });
-});
-
-// API for login
-router.post('/login', (req, res) => {
-    res.json({ message: "Login successful" });
-});
-
-// API to update user information
-router.put('/update', (req, res) => {
-    res.json({ message: "User information updated" });
-});
-
+router.post('/register', (req, res) => { res.send("Registered"); });
+router.post('/login', (req, res) => { res.send("Logged in"); });
+router.put('/update', (req, res) => { res.send("Updated"); });
 module.exports = router;
